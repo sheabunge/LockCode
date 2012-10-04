@@ -1,0 +1,9 @@
+/*
+	Delete Code
+	Deletes the file that is created by the LockCode program which stores the passcode.
+	The next time you run the LockCode program you will be asked to create a new code.
+*/
+
+task main() {
+	DeleteFile("LockCode.dat");
+}

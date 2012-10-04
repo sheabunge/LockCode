@@ -1,0 +1,127 @@
+/*
+	LockCode
+	Rename to "! Startup.nxc" and download to protect your NXT at startup.
+	When NXT is turned on it will prompt for a code. The first time the program is run it will ask you to set a code.
+	If you enter the wrong code, the NXT will flash a message, otherwise, the program will end, allowing you to access your NXT.
+	The dark grey button will turn off the NXT instead of ending the program.
+	If you forget the code and want to set a new one, simply delete the file 'LockCode.bat' from the NXT using somthing like NeXT Explorer or NeXT Commander.
+  
+	Created by 'bungeshea' on 4th May 2012
+	The NXT Generation Robotics - http://robotics.bungeshea.com
+*/
+
+#download "Splash.ric"
+
+#define FILE        	"LockCode.dat"	// Name of the file to store the code in
+#define FILESIZE    	8
+
+#define CLEAR_SCREEN	DRAW_OPT_CLEAR_WHOLE_SCREEN
+
+struct Code{
+	int a;
+	int b;
+	int c;
+	int d;
+};
+
+Code code;
+
+int GetNum(int x, int y = LCD_LINE5, int value = 0){
+	while(!ButtonPressed(BTNCENTER,0))	// Poll for button presses until the center button is pressed
+	{
+		NumOut(x, y, value);	// Draw the number on the screen
+		RectOut(x-3, y-2, 10, 12);	// Draw a rectangle around the number
+		if(ButtonPressed(BTNRIGHT,0))	// If the user presses the right arrow...
+		{
+			while(ButtonPressed(BTNRIGHT,0));	// Wait for the button to be released
+			value++;	// Increse the value
+		}
+		if(ButtonPressed(BTNLEFT,0))	// If the user presses the left arrow...
+		{
+			while(ButtonPressed(BTNLEFT,0));	// Wait for the button to be released
+			value--;	// Decrease the value
+		}
+		if (value < 0) value = 9; // If the value is below 0, set it to 9
+		if (value > 9) value = 0; // If the value is above 9, set it to 0
+	}
+	while(ButtonPressed(BTNCENTER,0));	// Wait for the center button to be released
+	RectOut(x-3, y-2, 10, 12, DRAW_OPT_CLEAR);	// Clear the rectangle
+	return value;
+}
+
+Code GetCode()
+{
+	Code code;
+	// Draw placeholder numbers on the screen
+	NumOut(15, LCD_LINE5, 0);
+	NumOut(35, LCD_LINE5, 0);
+	NumOut(55, LCD_LINE5, 0);
+	NumOut(75, LCD_LINE5, 0);
+	// Prompt the user for each digit of the code
+	code.a = GetNum(15);
+	code.b = GetNum(35);
+	code.c = GetNum(55);
+	code.d = GetNum(75);
+	return code;
+}
+
+void WriteCode()
+{
+	byte handle; unsigned int result, fsize;
+	DeleteFile(FILE);	// Delete the exsting file
+	CreateFile(FILE, FILESIZE, handle);	// Create a new file
+	Write(handle, code);	// Write the code to the file
+	CloseFile(handle);	// Close the file
+}
+
+void ReadCode()
+{
+	byte handle; unsigned int result, fsize;
+	result = OpenFileRead(FILE, fsize, handle);		// Attempt to open the file
+	if(result == LDR_SUCCESS)	// If file exists...
+	{
+		Read(handle, code);		// Read the data to the Code varable
+		CloseFile(handle);		// And close the file
+	}
+	else	// If the file does not exist, prompt to create a new code
+	{
+		TextOut(12, LCD_LINE2, "Set passcode:", CLEAR_SCREEN);	// Show a message
+		code = GetCode(); // Prompt the user to enter a new code
+		WriteCode();	// Store the code in a file
+	}
+}
+
+task turnOff()
+{
+ 	SetAbortFlag(BTNSTATE_NONE);	// Disable the exit button
+	while(true)
+	{
+		if(ButtonPressed(BTNEXIT, 0))	// If the exit button is pressed...
+			ForceOff(true);		// Turn off the NXT
+	}
+}
+
+task lockCode()
+{
+	ReadCode();
+	while(true)
+	{
+		TextOut(7, LCD_LINE2, "Enter passcode:", CLEAR_SCREEN);
+		Code input = GetCode();
+		if(input == code)	// If the code that we've just entered matches the one stored on file...
+			Stop(true);		// Stop the program, allowing the user to access the NXT
+		else{
+			TextOut(7, LCD_LINE2, "Wrong passcode!");	// Else, flash some text and try again
+			Wait(1500);
+		}
+	}
+}
+
+task main()
+{
+	ClearScreen();	// Clear the screen, just in case the splash image does not exist
+	GraphicOut(0, 0, "Splash.ric");		// Show the spalsh image
+	PlayFileEx("! Startup.rso", Volume(), 0);	// Play the startup sound
+	Wait(1000);		// Wait for the file to finish playing
+	Precedes(turnOff, lockCode);
+}
