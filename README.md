@@ -1,4 +1,4 @@
-#LockCode - Protect your NXT at startup
+# LockCode - Protect your NXT at startup
 
 Ever wanted to protect your NXT from a pesky brother or sister?
 
@@ -8,3 +8,13 @@ If you forget the code and want to set a new one, simply delete the file 'LockCo
 There is also a program incuded in the zip file, `Delete Code.nxc` that will do just that.
 
 [Discuss on the Mindboards Forums](https://sourceforge.net/apps/phpbb/mindboards/viewtopic.php?f=4&t=1473)
+
+## Changelog
+
+### 1.0.1
+	Released on 2012-05-06
+The NXT cannot be turned off for 10 seconds to prevent it from locking up.
+
+### 1.0 
+	Released on 2012-05-04
+Initial release
