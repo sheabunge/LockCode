@@ -17,7 +17,8 @@ There is also a program included, [`Delete Code.nxc`](https://github.com/bungesh
 __Released on 6<sup>th</sup> October 2012__
 
 * Removed splash image
-* Fixed security issue with the user being able to exit the program while the startup sound was being played
+* Fixed security issue with the user being able to exit the program while the startup sound was being 
+* Improved compatibility with NXC/NBC Enhanced Firmware
 
 ### 1.0.1
 __Released on 6<sup>th</sup> May 2012__
