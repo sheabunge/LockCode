@@ -19,12 +19,12 @@
 
 #define CLEAR_SCREEN	DRAW_OPT_CLEAR_WHOLE_SCREEN
 
-/* Define the LockCode data type. It will hold four integers */
+/* Define the LockCode data type. It will hold four chars */
 struct LockCode{
-	int a;
-	int b;
-	int c;
-	int d;
+	char a;
+	char b;
+	char c;
+	char d;
 };
 
 LockCode code;
