@@ -124,7 +124,7 @@ void ReadCode()
 task turnOff()
 {
 	// only pass this point if the NXT is running the enhanced firmware
-	#ifdef __EHANCED_FIRMWARE__
+	#ifdef __ENHANCED_FIRMWARE__
 	
  	SetAbortFlag(BTNSTATE_NONE); // disable the exit button
  	Wait(SEC_10); // wait 10 seconds to prevent the NXT from locking up
