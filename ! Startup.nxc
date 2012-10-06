@@ -1,5 +1,5 @@
 /*
-	LockCode 1.0.1
+	LockCode 1.0.2
 	Rename to "! Startup.nxc" and download to protect your NXT at startup.
 	When NXT is turned on it will prompt for a code. The first time the program is run it will ask you to set a code.
 	If you enter the wrong code, the NXT will flash a message, otherwise, the program will end, allowing you to access your NXT.
@@ -9,8 +9,6 @@
 	Created by 'bungeshea' on 6th May 2012
 	The NXT Generation Robotics - http://robotics.bungeshea.com
 */
-
-#download "Splash.ric"
 
 #define FILE        	"LockCode.dat"	// Name of the file to store the code in
 #define FILESIZE    	8
@@ -26,7 +24,7 @@ struct LockCode{
 
 LockCode code;
 
-int GetNum(int x, int y = LCD_LINE5, int value = 0){
+int GetNum(int x, int y = LCD_LINE5, int value = 0) {
 	while(!ButtonPressed(BTNCENTER,0))	// Poll for button presses until the center button is pressed
 	{
 		NumOut(x, y, value);	// Draw the number on the screen
@@ -108,6 +106,7 @@ task lockCode()
 	while(true)
 	{
 		TextOut(7, LCD_LINE2, "Enter passcode:", CLEAR_SCREEN);
+		Wait(10);
 		LockCode input = GetCode();
 		if(input == code)	// If the code that we've just entered matches the one stored on file...
 			Stop(true);		// Stop the program, allowing the user to access the NXT
@@ -120,17 +119,6 @@ task lockCode()
 
 task main()
 {
-	ClearScreen();	// Clear the screen, just in case the splash image does not exist
-	GraphicOut(0, 0, "Splash.ric");		// Show the spalsh image
 	PlayFileEx("! Startup.rso", Volume(), 0);	// Play the startup sound
-	Wait(1000);		// Wait for the file to finish playing
 	Precedes(turnOff, lockCode);
 }
-
-/*
-Changelog
-
-1.0.1 (2012-05-06): The NXT cannot be turned off for 10 seconds to prevent it from locking up.
-
-1.0   (2012-05-04): Initial release
-*/
