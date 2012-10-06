@@ -2,10 +2,12 @@
 
 Ever wanted to protect your NXT from a pesky brother or sister?
 
-When you startup your NXT it will show a splash image and play a sound, then prompt for a four digit code. The first time the program is run it will ask you to set a code. If you enter the wrong code, the NXT will flash a message, otherwise, the program will end, allowing you to access your NXT. The dark grey button will turn off the NXT instead of ending the program.
+When you startup your NXT, instead of showing the startup animation, it will prompt for a four digit code. The code must be entered correctly before you can access your NXT. If you enter the wrong code, the NXT will flash a message, otherwise, the program will end, allowing you to access your NXT. The dark grey button will turn off the NXT instead of ending the program.
 
-If you forget the code and want to set a new one, simply delete the file `LockCode.bat` from the NXT using something like [NeXT Explorer](http://bricxcc.sourceforge.net/utilities.html) or [NeXT Commander](http://nextcommander.sourceforge.net/).
-There is also a program included in the zip file, `Delete Code.nxc` that will do just that.
+If you use the NXC Enhanced Firmware, the dark grey exit button will not simple exit the program, instead it will turn off the NXT. LockCode *can* be used without the enhanced firmware, but this functionality will be disabled, decreasing the usefulness of this program.
+
+The first time the program is run it will ask you to set a code. If you forget the code and want to set a new one, simply delete the file `LockCode.dat` from the NXT using something like [NeXT Explorer](http://bricxcc.sourceforge.net/utilities.html) or [NeXT Commander](http://nextcommander.sourceforge.net/).
+There is also a program included, [`Delete Code.nxc`](https://github.com/bungeshea/LockCode/blob/master/DeleteCode.nxc), that will do the same.
 
 [Discuss on the Mindboards Forums](https://sourceforge.net/apps/phpbb/mindboards/viewtopic.php?f=4&t=1473)
 
