@@ -12,14 +12,17 @@ There is also a program incuded in the zip file, `Delete Code.nxc` that will do 
 ## Changelog
 
 ### 1.0.2
-	Released on 2012-10-06
+__Released on 6<sup>th</sup> October 2012__
+
 * Removed splash image
 * Fixed sercurity issue with the user being able to turn off the NXT while the sound was being played
 
 ### 1.0.1
-	Released on 2012-05-06
+__Released on 6<sup>th</sup> May 2012__
+
 * The NXT cannot be turned off for 10 seconds to prevent it from locking up.
 
 ### 1.0 
-	Released on 2012-05-04
+__Released on 4<sup>th</sup> May 2012__
+
 * Initial release
